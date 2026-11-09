@@ -33,19 +33,22 @@ The Weibull distribution is a natural fit: it's a standard model for time-to-eve
 - $k = 1$: the same chance every second (the exponential, which has no memory)
 - $k > 1$: the longer you wait, the readier it gets
 
-I use $k = 3$ and $\lambda = 12$ s, so ferns come to visitors who stay still: the median wait is about 10.6 s, and 90% of ferns unfurl between 4.5 and 17.3 s.
+I use $k = 3$ and $\lambda = 6$ s, so ferns rise from moss that's been left alone: the median wait is about 5.3 s, and 90% of ferns unfurl between 2.2 and 8.6 s. (I started with $\lambda = 12$ s, but on the page the first fern took too long to show up.)
 
-<img src="notebook/figures/fig4_weibull_shapes.png" alt="Weibull waiting times for k = 0.7, 1 and 3: with k = 3 the readiness to unfurl keeps rising the longer a patch stays still" width="700">
+The same distribution, with $k = 2$, also times when spores land somewhere new and start a fresh patch.
+
+<img src="notebook/figures/fig4_weibull_shapes.png" alt="Weibull waiting times for k = 0.7, 1 and 3 with λ = 6 s: with k = 3 the median wait is 5.3 s and the readiness to unfurl keeps rising the longer a patch is left alone" width="700">
 
 ## How it fits together
 
-The life of one patch on the page:
+How the garden on my homepage grows:
 
-1. **Spores land.** Each mature patch releases spores, and how far each one flies is drawn from the lognormal kernel. Most land close by, and a few land far away.
-2. **Moss spreads.** Spores that land on bare ground grow into new moss. Because of the fat tail, the moss doesn't just creep outward; it starts outposts far ahead.
-3. **Ferns rise.** When a patch has matured and nobody has disturbed it, it waits a Weibull-distributed time and then a fern unfurls.
+1. **New patches start.** Every so often, after a Weibull-distributed wait, a spore lands somewhere new. Parts of the page further down only wake up once they've been scrolled into view, so you see them begin.
+2. **Spores spread.** Every bit of moss keeps releasing spores, and how far each one flies is drawn from the lognormal kernel. Most land close by, and a few land far away.
+3. **Only damp ground holds them.** A spore takes root only where a hidden habitat map (smooth random noise, like damp and dry ground) says it can. So the moss grows as a carpet with fingers and gaps rather than in circles. The habitat decides *whether* a spore takes root; how far it travelled always comes from the kernel.
+4. **Ferns rise.** When moss has settled and nobody has disturbed it, it waits a Weibull-distributed time and then a fern unfurls. New ferns tend to come up near existing ones, so they gather in small groups.
 
-So the lognormal decides *where* things grow, and the Weibull decides *when* the ferns appear.
+So the lognormal decides *where* spores land, the habitat decides *whether* they take, and the Weibull decides *when* new patches and ferns appear. The cursor can clear moss, curl ferns away and make the creepers fold up, but that's interaction, not part of the model.
 
 ## Repo layout
 
@@ -54,6 +57,8 @@ So the lognormal decides *where* things grow, and the Weibull decides *when* the
 | `notebook/moss.ipynb` | The analysis: sampling, plots, the spread comparison, parameter choices. |
 | `notebook/figures/` | The figures, as PNGs. |
 | `notebook/requirements.txt` | Python dependencies for the notebook. |
+
+The homepage's own implementation is [`moss.js`](https://github.com/PrithviHegde/PrithviHegde.github.io/blob/main/moss.js) in the site's repo.
 
 ## Running the notebook
 
